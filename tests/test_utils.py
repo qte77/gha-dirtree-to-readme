@@ -84,6 +84,28 @@ def test_get_write_positions_in_file(tmp_path):
     assert start == 1
     assert end == 3
 
+def test_write_to_file_consecutive_markers(tmp_path):
+    test_file = tmp_path / 'test.md'
+    test_file.write_text(
+        'Header\n'
+        '<!-- DIRTREE-README-ACTION-INSERT-HERE-START -->\n'
+        '<!-- DIRTREE-README-ACTION-INSERT-HERE-END -->\n'
+        'Footer\n'
+    )
+    dirtree = deque(['```sh\n', '└── app.py\n', '```\n'])
+    start, end = get_write_positions_in_file(
+        test_file,
+        '<!-- DIRTREE-README-ACTION-INSERT-HERE-START -->',
+        '<!-- DIRTREE-README-ACTION-INSERT-HERE-END -->'
+    )
+    write_to_file(test_file, dirtree, start, end)
+    content = test_file.read_text()
+    assert '```sh' in content
+    assert '└── app.py' in content
+    assert 'Header' in content
+    assert 'Footer' in content
+
+
 def test_write_to_file(tmp_path):
     test_file = tmp_path / 'test.md'
     test_file.write_text(

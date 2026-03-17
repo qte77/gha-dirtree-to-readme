@@ -37,9 +37,11 @@ Types of changes:
 
 ### Fixed
 
+- `write_to_file` silently skipping insertion when markers are consecutive (no content between)
 - Test assertions in `test_utils.py`: trailing space in `_get_tree_theme('sh')`, `deque` return type, dead `write_to_file` assertions
 - Badge URLs in README: `dirtree-readme-action` → `gha-dirtree-to-readme`
 - `test_get_write_positions_in_file` indentation causing marker mismatch
+- CI pytest workflow now caches uv dependencies
 
 ---
 
