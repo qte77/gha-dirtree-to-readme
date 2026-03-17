@@ -36,7 +36,7 @@ runs:
     - name: Set env
       shell: bash
       run: |
-        echo "APP=src/app.py" >> $GITHUB_ENV
+        echo "APP=${{ github.action_path }}/src/app.py" >> $GITHUB_ENV
         echo "BRANCH_NEW=dirtree-readme-${{ github.run_number }}-${{ github.ref_name }}" >> $GITHUB_ENV
         echo "OUT_FILE=${{ inputs.OUT_FILE }}" >> $GITHUB_ENV # for app.py
         echo "PY_VER=3.12" >> $GITHUB_ENV
@@ -62,6 +62,8 @@ runs:
 
     - name: Run '${{ env.APP }}'
       shell: bash
+      env:
+        PYTHONPATH: ${{ github.action_path }}/src
       run: python -B ${{ env.APP }}
 
     - name: Check if there are any changes
