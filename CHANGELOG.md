@@ -16,6 +16,10 @@ Types of changes:
 
 ## [Unreleased]
 
+---
+
+## [1.0.0] - 2026-03-17
+
 ### Added
 
 - `main()` function in `src/app.py` for testability
