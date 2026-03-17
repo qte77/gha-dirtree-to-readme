@@ -1,50 +1,34 @@
-# https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-docker-container-action
-# https://github.com/athul/waka-readme/blob/master/action.yml
-name: "TEST-Dirtree-to-Readme"
+# https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-composite-action
+name: "GHA Dirtree to Readme"
 description: "Copy directory tree into file, e.g. README.md, instead of manual effort."
 author: "qte77"
-repo: "https://github.com/qte77/dirtree-readme-action/"
 branding:
   icon: "file-text"
   color: "white"
-keywords:
-  [
-    'readme',
-    'README.md',
-    'repo',
-    'structure',
-    'directory',
-    'folder',
-    'tree'
-  ]
 inputs:
   OUT_FILE:
+    description: "The file to write the directory tree to."
     default: README.md
-    type: string
     required: true
   GH_TOKEN:
+    description: "GitHub token for authentication."
     default: ${{ github.token }}
-    type: string
     required: true
   REPOSITORY:
+    description: "GitHub repository name."
     default: ${{ github.repository }}
-    type: string
     required: true
   COMMITTER_NAME:
+    description: "Name of the committer for the commit."
     default: 'DirTreeToReadme-GHA'
-    type: string
     required: true
   COMMITTER_EMAIL:
+    description: "Email of the committer for the commit."
     default: 'dirtree@gha'
-    type: string
     required: true
   CREATE_PR:
-    type: boolean
-    default: false
-permissions:
-  actions: read
-  contents: write
-  pull-requests: write
+    description: "Whether to create a pull request with the changes."
+    default: 'false'
 runs:
   using: 'composite'
   steps:
@@ -98,7 +82,7 @@ runs:
         git push --set-upstream origin "${{ env.BRANCH_NEW }}"
 
     - name: Create PR '${{ env.BRANCH_NEW }}'
-      if: ${{ inputs.CREATE_PR == true &&
+      if: ${{ inputs.CREATE_PR == 'true' &&
         steps.diff_check_changed.outputs.changed == 'true' }}
       shell: bash
       env:
@@ -123,19 +107,3 @@ runs:
         src="${{ env.SCRIPT_PATH }}/delete_branch_pr_tag.sh"
         chmod +x "$src"
         $src "${{ github.ref_name }}" "${{ env.BRANCH_NEW }}"
-
-#    - name: Set summary data
-#      id: set_summary
-#      if: ${{ always() }}
-#      shell: bash
-#      run: echo "summary_data=${GITHUB_STEP_SUMMARY}" >> $GITHUB_OUTPUT
-
-# FIXME error Unrecognized named-value: 'inputs'.
-# Located at position 1 within expression: inputs.REPOSITORY  
-#    - name: Generate summary report 
-#      if: ${{ always() }}
-#      # needs: bump_my_version
-#      uses: ${{ inputs.REPOSITORY }}/.github/workflows/summarize-jobs-reusable.yaml@${{ github.ref_name }}
-#      with:
-#        branch_to_summarize: ${{ env.BRANCH_NEW }}
-#        summary_data: ${{ steps.set_summary.outputs.summary_data }}
