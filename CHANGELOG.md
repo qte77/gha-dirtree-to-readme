@@ -16,6 +16,33 @@ Types of changes:
 
 ## [Unreleased]
 
+### Added
+
+- `main()` function in `src/app.py` for testability
+- Tests for `main()` in `tests/test_app.py`
+- Usage section, inputs table, and environment variables table in README
+- Input descriptions in `action.yaml` for marketplace validation
+
+### Changed
+
+- Renamed action to "GHA Dirtree to Readme"
+- Pytest CI workflow now uses `uv` instead of pip
+- Moved pytest `pythonpath` config into `pyproject.toml`
+
+### Removed
+
+- Stale `Dockerfile` (action is composite, not Docker)
+- Unused `pydantic` dev dependency
+- Non-standard fields from `action.yaml` (`repo`, `keywords`, `permissions`, `type`)
+
+### Fixed
+
+- `write_to_file` silently skipping insertion when markers are consecutive (no content between)
+- Test assertions in `test_utils.py`: trailing space in `_get_tree_theme('sh')`, `deque` return type, dead `write_to_file` assertions
+- Badge URLs in README: `dirtree-readme-action` → `gha-dirtree-to-readme`
+- `test_get_write_positions_in_file` indentation causing marker mismatch
+- CI pytest workflow now caches uv dependencies
+
 ---
 
 ## [0.2.2] - 2025-01-02

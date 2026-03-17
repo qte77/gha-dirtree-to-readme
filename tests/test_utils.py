@@ -1,4 +1,5 @@
 import pytest
+from collections import deque
 from pathlib import Path
 from utils import (
     _get_tree_theme,
@@ -14,7 +15,7 @@ def test_get_tree_theme():
     assert _get_tree_theme('slash') == (' ', '│ ', '│── ', '\── ')
     assert _get_tree_theme('elli') == (' ', '︙ ', '︙··· ', ' ···· ')
     assert _get_tree_theme('null') == (' ', ' ', ' ', ' ')
-    assert _get_tree_theme('sh') == (' ', '│ ', '├── ', '└──')
+    assert _get_tree_theme('sh') == (' ', '│ ', '├── ', '└── ')
     with pytest.raises(NotImplementedError):
         _get_tree_theme('invalid_theme')
 
@@ -61,41 +62,65 @@ def test_get_formatted_tree_output(tmp_path):
     
     exclude_list = ['.git', '__pycache__']
     tree_output = get_formatted_tree_output(tmp_path, exclude_list, 'sh', 'sh')
-    assert isinstance(tree_output, list)
+    assert isinstance(tree_output, deque)
     assert len(tree_output) > 0
     assert tree_output[0].startswith('```')
     assert tree_output[-1].startswith('```')
 
 def test_get_write_positions_in_file(tmp_path):
     test_file = tmp_path / 'test.md'
-    test_file.write_text('''
-    Some content
-    <!-- DIRTREE-README-ACTION-INSERT-HERE-START -->
-    <!-- DIRTREE-README-ACTION-INSERT-HERE-END -->
-    More content
-    ''')
+    test_file.write_text(
+        'Some content\n'
+        '<!-- DIRTREE-README-ACTION-INSERT-HERE-START -->\n'
+        'old tree\n'
+        '<!-- DIRTREE-README-ACTION-INSERT-HERE-END -->\n'
+        'More content\n'
+    )
     start, end = get_write_positions_in_file(
         test_file,
         '<!-- DIRTREE-README-ACTION-INSERT-HERE-START -->',
         '<!-- DIRTREE-README-ACTION-INSERT-HERE-END -->'
     )
-    assert start == 2
+    assert start == 1
     assert end == 3
+
+def test_write_to_file_consecutive_markers(tmp_path):
+    test_file = tmp_path / 'test.md'
+    test_file.write_text(
+        'Header\n'
+        '<!-- DIRTREE-README-ACTION-INSERT-HERE-START -->\n'
+        '<!-- DIRTREE-README-ACTION-INSERT-HERE-END -->\n'
+        'Footer\n'
+    )
+    dirtree = deque(['```sh\n', '└── app.py\n', '```\n'])
+    start, end = get_write_positions_in_file(
+        test_file,
+        '<!-- DIRTREE-README-ACTION-INSERT-HERE-START -->',
+        '<!-- DIRTREE-README-ACTION-INSERT-HERE-END -->'
+    )
+    write_to_file(test_file, dirtree, start, end)
+    content = test_file.read_text()
+    assert '```sh' in content
+    assert '└── app.py' in content
+    assert 'Header' in content
+    assert 'Footer' in content
+
 
 def test_write_to_file(tmp_path):
     test_file = tmp_path / 'test.md'
-    test_file.write_text('''
-    Some content
-    <!-- DIRTREE-README-ACTION-INSERT-HERE-START -->
-    <!-- DIRTREE-README-ACTION-INSERT-HERE-END -->
-    More content
-    ''')
-    dirtree = ['``````']
-    write_to_file(test_file, dirtree, 2, 3)
-    with open(test_file, 'r') as f:
-        content = f.read()
-    assert '```'
+    test_file.write_text(
+        'Some content\n'
+        '<!-- DIRTREE-README-ACTION-INSERT-HERE-START -->\n'
+        'old tree here\n'
+        '<!-- DIRTREE-README-ACTION-INSERT-HERE-END -->\n'
+        'More content\n'
+    )
+    dirtree = deque(['```sh\n', '├── dir1\n', '└── file3.txt\n', '```\n'])
+    write_to_file(test_file, dirtree, 1, 3)
+    content = test_file.read_text()
+    assert '```sh' in content
     assert '├── dir1' in content
-    assert '│ └── file1.txt' in content
     assert '└── file3.txt' in content
-    assert '```' in content
+    assert 'old tree here' not in content
+    assert 'Some content' in content
+    assert 'More content' in content

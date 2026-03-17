@@ -154,11 +154,17 @@ def write_to_file(
     assert start_index >= 0 and end_index >= 1, \
         f"Can not insert: {start_index=}, {end_index=}"
     f_in = (line for line in open(outfpath, 'r'))
+    tree_written = False
     with open(outfpath_temp, 'w') as f_out:
         for index, line in enumerate(f_in):
-            if index <= start_index or index >= end_index:
+            if index <= start_index:
                 f_out.write(line)
-            elif index == start_index + 1:
+            elif not tree_written:
                 f_out.writelines(dirtree)
+                tree_written = True
+                if index >= end_index:
+                    f_out.write(line)
+            elif index >= end_index:
+                f_out.write(line)
     outfpath.unlink() # missing_ok=True
     outfpath_temp.rename(outfpath)
