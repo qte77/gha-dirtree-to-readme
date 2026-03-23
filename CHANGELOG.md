@@ -16,6 +16,22 @@ Types of changes:
 
 ## [Unreleased]
 
+### Changed
+
+- `callowayproject/bump-my-version` `@0.29.0` → `@1.2.7`
+- `actions/checkout` `@v4` → `@v6`
+- `github/codeql-action` `@v3` → `@v4`
+- Bump workflow creates GitHub Release and updates floating major tag
+- Cleanup script includes release deletion
+
+### Added
+
+- `github-actions` ecosystem to dependabot
+
+### Removed
+
+- Orphaned `summarize-jobs-reusable.yaml`
+
 ---
 
 ## [1.0.0] - 2026-03-17
