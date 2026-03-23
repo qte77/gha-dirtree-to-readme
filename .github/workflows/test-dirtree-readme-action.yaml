@@ -9,7 +9,7 @@ jobs:
     name: 'Get and save dirtree to `README.md`'
     steps:
       - name: checkout repo
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v6
         with:
           repository: qte77/dirtree-readme-action
           token: ${{ secrets.GITHUB_TOKEN }}

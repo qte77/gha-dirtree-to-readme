@@ -1,15 +1,17 @@
 #!/bin/bash
-# 1 repo, 2 target ref, 3 current version
+# Cleanup on bump failure: close PR, delete branch, tag, and release.
+# Args: $1 = repo (owner/name), $2 = branch name, $3 = version (without v prefix)
 
-tag_to_delete="v$3"
-branch_del_api_call="repos/$1/git/refs/heads/$2"
-del_msg="'$2' force deletion attempted."
 close_msg="Closing PR '$2' to rollback after failure"
 
-echo "Tag $tag_to_delete for $del_msg"
-git tag -d "$tag_to_delete"
-echo "PR for $del_msg"
-gh pr close "$2" --comment "$close_msg"
-echo "Branch $del_msg"
-gh api "$branch_del_api_call" -X DELETE && \
-  echo "Branch without error return deleted."
+echo "Closing PR for branch '$2'..."
+gh pr close "$2" --comment "$close_msg" 2>/dev/null || true
+
+echo "Deleting branch '$2'..."
+gh api "repos/$1/git/refs/heads/$2" -X DELETE 2>/dev/null || true
+
+echo "Deleting release 'v$3'..."
+gh release delete "v$3" --repo "$1" --yes 2>/dev/null || true
+
+echo "Deleting tag 'v$3'..."
+gh api "repos/$1/git/refs/tags/v$3" -X DELETE 2>/dev/null || true
