@@ -3,14 +3,15 @@
 Copy directory tree into file, e.g. README.md, instead of manual effort.
 
 ![Version](https://img.shields.io/badge/version-1.1.1-8A2BE2)
-[![pytest](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/pytest.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/pytest.yaml)
+[![License](https://img.shields.io/badge/license-BSD--3--Clause-blue)](LICENSE)
 [![test-action](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/test-dirtree-readme-action.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/test-dirtree-readme-action.yaml)
-[![CodeQL](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/codeql.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/codeql.yaml)
 [![CodeFactor](https://www.codefactor.io/repository/github/qte77/gha-dirtree-to-readme/badge)](https://www.codefactor.io/repository/github/qte77/gha-dirtree-to-readme)
-[![ruff](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/ruff.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/ruff.yaml)
+[![CodeQL](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/codeql.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/codeql.yaml)
+[![Dependabot](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/dependabot/dependabot-updates)
+[![Ruff](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/ruff.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/ruff.yaml)
+[![pytest](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/pytest.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/pytest.yaml)
 [![Link Checker](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/links-fail-fast.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/links-fail-fast.yaml)
 [![Deploy Docs](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/generate-deploy-mkdocs-ghpages.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/generate-deploy-mkdocs-ghpages.yaml)
-[![vscode.dev](https://img.shields.io/static/v1?logo=visualstudiocode&label=&message=vscode.dev&labelColor=2c2c32&color=007acc&logoColor=007acc)](https://vscode.dev/github/qte77/gha-dirtree-to-readme)
 
 For version history have a look at the [CHANGELOG](CHANGELOG.md).
 
