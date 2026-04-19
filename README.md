@@ -3,15 +3,13 @@
 Copy directory tree into file, e.g. README.md, instead of manual effort.
 
 ![Version](https://img.shields.io/badge/version-1.1.1-8A2BE2)
-[![License](https://img.shields.io/badge/license-BSD--3--Clause-blue)](LICENSE)
+![License](https://img.shields.io/badge/license-Apache--2.0-blue)
 [![test-action](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/test-dirtree-readme-action.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/test-dirtree-readme-action.yaml)
 [![CodeFactor](https://www.codefactor.io/repository/github/qte77/gha-dirtree-to-readme/badge)](https://www.codefactor.io/repository/github/qte77/gha-dirtree-to-readme)
 [![CodeQL](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/codeql.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/codeql.yaml)
 [![Dependabot](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/dependabot/dependabot-updates)
 [![Ruff](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/ruff.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/ruff.yaml)
 [![pytest](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/pytest.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/pytest.yaml)
-[![Link Checker](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/links-fail-fast.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/links-fail-fast.yaml)
-[![Deploy Docs](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/generate-deploy-mkdocs-ghpages.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/generate-deploy-mkdocs-ghpages.yaml)
 
 For version history have a look at the [CHANGELOG](CHANGELOG.md).
 
@@ -32,16 +30,26 @@ Add marker comments in your target file where the tree should be inserted:
 <!-- DIRTREE-README-ACTION-INSERT-HERE-END -->
 ```
 
+## What it does
+
+1. Sets environment variables and checks out the repository
+2. Creates a new branch for the changes
+3. Sets up Python and runs `src/app.py` to generate a directory tree
+4. Inserts the tree output between the marker comments in the target file
+5. Commits and pushes the changes if the file was modified
+6. Optionally creates a pull request with the updated file
+7. Cleans up the branch, PR, and tag on failure or cancellation
+
 ## Inputs
 
-| Name | Description | Default | Required |
+| Name | Required | Default | Description |
 | --- | --- | --- | --- |
-| `OUT_FILE` | The file to write the directory tree to | `README.md` | Yes |
-| `GH_TOKEN` | GitHub token for authentication | `${{ github.token }}` | Yes |
-| `REPOSITORY` | GitHub repository name | `${{ github.repository }}` | Yes |
-| `COMMITTER_NAME` | Name of the committer for the commit | `DirTreeToReadme-GHA` | Yes |
-| `COMMITTER_EMAIL` | Email of the committer for the commit | `dirtree@gha` | Yes |
-| `CREATE_PR` | Whether to create a pull request with the changes | `false` | No |
+| `OUT_FILE` | Yes | `README.md` | The file to write the directory tree to |
+| `GH_TOKEN` | Yes | `${{ github.token }}` | GitHub token for authentication |
+| `REPOSITORY` | Yes | `${{ github.repository }}` | GitHub repository name |
+| `COMMITTER_NAME` | Yes | `DirTreeToReadme-GHA` | Name of the committer for the commit |
+| `COMMITTER_EMAIL` | Yes | `dirtree@gha` | Email of the committer for the commit |
+| `CREATE_PR` | No | `false` | Whether to create a pull request with the changes |
 
 ## Environment variables
 
@@ -73,3 +81,7 @@ These are read by `src/app.py` and can be overridden via `$GITHUB_ENV`.
 └── uv.lock
 ```
 <!-- DIRTREE-README-ACTION-INSERT-HERE-END -->
+
+## License
+
+[Apache-2.0](LICENSE)
