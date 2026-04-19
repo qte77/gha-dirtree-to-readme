@@ -84,4 +84,4 @@ These are read by `src/app.py` and can be overridden via `$GITHUB_ENV`.
 
 ## License
 
-[Apache-2.0](LICENSE.md)
+[Apache-2.0](LICENSE)
