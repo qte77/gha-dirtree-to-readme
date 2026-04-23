@@ -74,7 +74,7 @@ These are read by `src/app.py` and can be overridden via `$GITHUB_ENV`.
 │ └── utils.py
 ├── action.yaml
 ├── CHANGELOG.md
-├── LICENSE.md
+├── LICENSE
 ├── mkdocs.yaml
 ├── pyproject.toml
 ├── README.md
