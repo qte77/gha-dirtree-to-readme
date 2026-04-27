@@ -95,4 +95,3 @@ Types of changes:
 
 - From `pip` to `uv` for test and docs
 - Action from `Dockerfile` to `composite`
-
