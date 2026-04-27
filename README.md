@@ -21,7 +21,7 @@ For version history have a look at the [CHANGELOG](CHANGELOG.md).
     OUT_FILE: README.md
     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     CREATE_PR: 'true'
-```
+```text
 
 Add marker comments in your target file where the tree should be inserted:
 
@@ -79,7 +79,7 @@ These are read by `src/app.py` and can be overridden via `$GITHUB_ENV`.
 ├── pyproject.toml
 ├── README.md
 └── uv.lock
-```
+```text
 <!-- DIRTREE-README-ACTION-INSERT-HERE-END -->
 
 ## License
