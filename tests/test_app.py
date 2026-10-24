@@ -42,5 +42,5 @@ def test_main_writes_tree(mock_env):
 
 def test_main_missing_file(mock_env, monkeypatch):
     monkeypatch.setenv('OUT_FILE', str(mock_env / 'nonexistent.md'))
-    with pytest.raises(Exception):
+    with pytest.raises(FileNotFoundError):
         main()

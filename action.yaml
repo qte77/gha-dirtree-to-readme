@@ -44,7 +44,7 @@ runs:
         echo "SKIP_PR_HINT=[dirtree to readme gha]" >> $GITHUB_ENV
 
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         fetch-depth: 1
 
