@@ -20,6 +20,7 @@ Types of changes:
 
 - Ruff lint enables the `S` (flake8-bandit) rule set; `tests/*` ignore `S101`
 - `main()` raises `FileNotFoundError`, `_is_path_in_exclude` raises `TypeError`, and `write_to_file` raises `ValueError` instead of using `assert` (which `python -O` strips)
+- README follows the qte77 doc-structure canon (What → How → Why → Refs → License); inputs and environment-variable tables moved to `docs/configuration.md`
 
 ---
 
