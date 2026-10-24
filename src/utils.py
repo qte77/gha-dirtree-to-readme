@@ -59,8 +59,8 @@ def _get_tree_theme(theme: str = 'sh') -> Tuple[str, str, str, str]:
 
 def _is_path_in_exclude(path: Path, exclude_list: list) -> bool:
     """Check if path contains any excluded items."""
-    assert isinstance(path, Path)
-    assert isinstance(exclude_list, list)
+    if not isinstance(path, Path) or not isinstance(exclude_list, list):
+        raise TypeError("path must be Path and exclude_list must be list")
     for pt in path.parts:
         if pt in exclude_list:
             return True
@@ -151,8 +151,8 @@ def write_to_file(
     At least one line between start_index and end end_index needed. 
     """
     outfpath_temp = outfpath.with_suffix(".temp_outfile_ghact")
-    assert start_index >= 0 and end_index >= 1, \
-        f"Can not insert: {start_index=}, {end_index=}"
+    if start_index < 0 or end_index < 1:
+        raise ValueError(f"Can not insert: {start_index=}, {end_index=}")
     f_in = (line for line in open(outfpath, 'r'))
     tree_written = False
     with open(outfpath_temp, 'w') as f_out:

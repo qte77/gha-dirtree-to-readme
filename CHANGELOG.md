@@ -16,6 +16,11 @@ Types of changes:
 
 ## [Unreleased]
 
+### Changed
+
+- Ruff lint enables the `S` (flake8-bandit) rule set; `tests/*` ignore `S101`
+- `main()` raises `FileNotFoundError`, `_is_path_in_exclude` raises `TypeError`, and `write_to_file` raises `ValueError` instead of using `assert` (which `python -O` strips)
+
 ---
 
 ## [1.1.1] - 2026-03-23
