@@ -56,7 +56,7 @@ def main() -> None:
     directory tree, and writes it between marker comments in the output file.
 
     Raises:
-        AssertionError: If the output file or start path does not exist.
+        FileNotFoundError: If the output file or start path does not exist.
     """
     cmd_highlight: str = str(getenv("CMD_HIGHLIGHT", 'sh'))
     exclude: str = str(getenv("EXCLUDE", '.git|.github|.gitignore|.gitmessage'))
@@ -75,8 +75,9 @@ def main() -> None:
     fpath: Path = Path(out_file)
     spath: Path = Path('.')
 
-    assert fpath.exists(), f"{fpath} not found. Aborting"
-    assert spath.exists(), f"{spath} not found. Aborting"
+    for path in (fpath, spath):
+        if not path.exists():
+            raise FileNotFoundError(f"{path} not found. Aborting")
 
     start_index, end_index = get_write_positions_in_file(
         fpath, insert_start, insert_end

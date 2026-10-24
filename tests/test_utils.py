@@ -35,6 +35,12 @@ def test_is_path_in_exclude(path, expected):
     else:
         assert not _is_path_in_exclude(path, exclude_list)
 
+def test_is_path_in_exclude_rejects_wrong_types():
+    with pytest.raises(TypeError):
+        _is_path_in_exclude('src', ['.git'])
+    with pytest.raises(TypeError):
+        _is_path_in_exclude(Path('src'), '.git')
+
 def test_generate_tree(tmp_path):
     # Create a temporary directory structure
     (tmp_path / 'dir1').mkdir()
@@ -124,3 +130,10 @@ def test_write_to_file(tmp_path):
     assert 'old tree here' not in content
     assert 'Some content' in content
     assert 'More content' in content
+
+
+def test_write_to_file_rejects_invalid_indices(tmp_path):
+    test_file = tmp_path / 'test.md'
+    test_file.write_text('a\nb\n')
+    with pytest.raises(ValueError):
+        write_to_file(test_file, deque(['x\n']), -1, 0)
