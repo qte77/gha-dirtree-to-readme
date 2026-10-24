@@ -11,60 +11,17 @@ Copy directory tree into file, e.g. README.md, instead of manual effort.
 [![Ruff](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/ruff.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/ruff.yaml)
 [![pytest](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/pytest.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/pytest.yaml)
 
-For version history have a look at the [CHANGELOG](CHANGELOG.md).
+## What
 
-## Usage
+- Keeps a directory tree in your README (or any file) up to date, with no manual editing
+- Inserts the tree between two marker comments and leaves the rest of the file untouched
+- Commits the change to a new branch and pushes it, and opens a pull request when `CREATE_PR` is set
+- Respects `.gitignore` and a configurable exclude list
+- Offers several tree themes and any GitHub syntax-highlighting language for the code block
+- Cleans up its branch and PR if a run fails or is cancelled
 
-```yaml
-- uses: qte77/gha-dirtree-to-readme@v1
-  with:
-    OUT_FILE: README.md
-    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    CREATE_PR: 'true'
-```
-
-Add marker comments in your target file where the tree should be inserted:
-
-```markdown
-<!-- DIRTREE-README-ACTION-INSERT-HERE-START -->
-<!-- DIRTREE-README-ACTION-INSERT-HERE-END -->
-```
-
-## What it does
-
-1. Sets environment variables and checks out the repository
-2. Creates a new branch for the changes
-3. Sets up Python and runs `src/app.py` to generate a directory tree
-4. Inserts the tree output between the marker comments in the target file
-5. Commits and pushes the changes if the file was modified
-6. Optionally creates a pull request with the updated file
-7. Cleans up the branch, PR, and tag on failure or cancellation
-
-## Inputs
-
-| Name | Required | Default | Description |
-| --- | --- | --- | --- |
-| `OUT_FILE` | Yes | `README.md` | The file to write the directory tree to |
-| `GH_TOKEN` | Yes | `${{ github.token }}` | GitHub token for authentication |
-| `REPOSITORY` | Yes | `${{ github.repository }}` | GitHub repository name |
-| `COMMITTER_NAME` | Yes | `DirTreeToReadme-GHA` | Name of the committer for the commit |
-| `COMMITTER_EMAIL` | Yes | `dirtree@gha` | Email of the committer for the commit |
-| `CREATE_PR` | No | `false` | Whether to create a pull request with the changes |
-
-## Environment variables
-
-These are read by `src/app.py` and can be overridden via `$GITHUB_ENV`.
-
-| Name | Default |
-| --- | --- |
-| `CMD_HIGHLIGHT` | `sh` |
-| `EXCLUDE` | `.git\|.github\|.gitignore\|.gitmessage` (separated by `\|`) |
-| `INSERT_HERE_START_STRING` | `<!-- DIRTREE-README-ACTION-INSERT-HERE-START -->` |
-| `INSERT_HERE_END_STRING` | `<!-- DIRTREE-README-ACTION-INSERT-HERE-END -->` |
-| `OUT_FILE` | `README.md` |
-| `TREE_THEME` | `sh` |
-
-## Sample output
+<details>
+<summary>Sample output</summary>
 
 <!-- DIRTREE-README-ACTION-INSERT-HERE-START -->
 ```sh
@@ -81,6 +38,39 @@ These are read by `src/app.py` and can be overridden via `$GITHUB_ENV`.
 └── uv.lock
 ```
 <!-- DIRTREE-README-ACTION-INSERT-HERE-END -->
+
+</details>
+
+## How
+
+```yaml
+- uses: qte77/gha-dirtree-to-readme@v1
+  with:
+    OUT_FILE: README.md
+    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    CREATE_PR: 'true'
+```
+
+Add marker comments in your target file where the tree should be inserted:
+
+```markdown
+<!-- DIRTREE-README-ACTION-INSERT-HERE-START -->
+<!-- DIRTREE-README-ACTION-INSERT-HERE-END -->
+```
+
+All inputs and environment variables: [docs/configuration.md](docs/configuration.md).
+
+## Why
+
+Hand-maintained directory trees in READMEs go stale as soon as files move, and fixing them by hand
+is tedious and error-prone. This action regenerates the tree from the repository itself and delivers
+it as a commit or a reviewable PR.
+
+## Refs
+
+- [CHANGELOG](CHANGELOG.md)
+- [Configuration](docs/configuration.md)
+- [action.yaml](action.yaml)
 
 ## License
 

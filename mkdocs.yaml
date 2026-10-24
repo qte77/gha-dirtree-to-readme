@@ -37,6 +37,7 @@ nav:
   - Home: index.md
 #  - PRD: PRD.md
 #  - User Story: UserStory.md
+  - Configuration: configuration.md
   - Code: docstrings.md
   - Change Log: CHANGELOG.md
   - License: LICENSE.md

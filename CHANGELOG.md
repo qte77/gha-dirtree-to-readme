@@ -16,6 +16,10 @@ Types of changes:
 
 ## [Unreleased]
 
+### Changed
+
+- README follows the qte77 doc-structure canon (What → How → Why → Refs → License); inputs and environment-variable tables moved to `docs/configuration.md`
+
 ---
 
 ## [1.1.1] - 2026-03-23
