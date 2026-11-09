@@ -16,8 +16,13 @@ Types of changes:
 
 ## [Unreleased]
 
+### Security
+
+- Dependency security update in `uv.lock`: certifi 2026.10.23, urllib3 2.8.0, mkdocs-material 9.8.0, pymdown-extensions 11.0.2 (kept below 12, which breaks the mkdocstrings build). The uv `exclude-newer` cutoff moves from 2026-05-13 to 2026-11-02, since the fixed releases are newer than the old cutoff
+
 ### Changed
 
+- Dependabot uses its `uv` ecosystem instead of `pip` for this uv-managed project; `.gitignore` lists `.claude/settings.local.json`
 - Ruff lint enables the `S` (flake8-bandit) rule set; `tests/*` ignore `S101`
 - `main()` raises `FileNotFoundError`, `_is_path_in_exclude` raises `TypeError`, and `write_to_file` raises `ValueError` instead of using `assert` (which `python -O` strips)
 - README follows the qte77 doc-structure canon (What → How → Why → Refs → License); inputs and environment-variable tables moved to `docs/configuration.md`
