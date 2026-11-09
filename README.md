@@ -2,7 +2,7 @@
 
 Copy directory tree into file, e.g. README.md, instead of manual effort.
 
-![Version](https://img.shields.io/badge/version-1.1.1-8A2BE2)
+![Version](https://img.shields.io/badge/version-1.1.2-8A2BE2)
 ![License](https://img.shields.io/badge/license-Apache--2.0-blue)
 [![test-action](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/test-dirtree-readme-action.yaml/badge.svg)](https://github.com/qte77/gha-dirtree-to-readme/actions/workflows/test-dirtree-readme-action.yaml)
 [![CodeFactor](https://www.codefactor.io/repository/github/qte77/gha-dirtree-to-readme/badge)](https://www.codefactor.io/repository/github/qte77/gha-dirtree-to-readme)
