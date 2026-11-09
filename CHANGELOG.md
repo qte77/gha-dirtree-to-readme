@@ -16,6 +16,10 @@ Types of changes:
 
 ## [Unreleased]
 
+---
+
+## [1.1.2] - 2026-11-09
+
 ### Security
 
 - Dependency security update in `uv.lock`: certifi 2026.10.23, urllib3 2.8.0, mkdocs-material 9.8.0, pymdown-extensions 11.0.2 (kept below 12, which breaks the mkdocstrings build). The uv `exclude-newer` cutoff moves from 2026-05-13 to 2026-11-02, since the fixed releases are newer than the old cutoff
