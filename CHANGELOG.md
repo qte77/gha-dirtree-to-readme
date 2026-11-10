@@ -16,6 +16,11 @@ Types of changes:
 
 ## [Unreleased]
 
+### Fixed
+
+- "Deploy Docs" runs on the push to `main` instead of on closed pull requests. The `github-pages` environment only allows `main` and `dev-gh-pages` to deploy, so every `pull_request` run (ref `refs/pull/<N>/merge`) was rejected before any step started. The workflow also copies the extension-less `LICENSE` to `docs/LICENSE.md`, the name the mkdocs nav expects
+- `uv.lock` synced to the 1.1.2 project version, so `uv run --locked` (used by the docs build) no longer fails
+
 ---
 
 ## [1.1.2] - 2026-11-09
