@@ -21,6 +21,10 @@ Types of changes:
 - "Deploy Docs" runs on the push to `main` instead of on closed pull requests. The `github-pages` environment only allows `main` and `dev-gh-pages` to deploy, so every `pull_request` run (ref `refs/pull/<N>/merge`) was rejected before any step started. The workflow also copies the extension-less `LICENSE` to `docs/LICENSE.md`, the name the mkdocs nav expects
 - `uv.lock` synced to the 1.1.2 project version, so `uv run --locked` (used by the docs build) no longer fails
 
+### Security
+
+- Pinned every remaining `uses:` ref in `.github/workflows/*` and `action.yaml` to its commit SHA (`actions/checkout@v7`, `callowayproject/bump-my-version@1.4.1`, `github/codeql-action/{init,autobuild,analyze}@v4`, `actions/configure-pages@v6`, `astral-sh/setup-uv@v7`, `actions/upload-pages-artifact@v5`, `actions/deploy-pages@v5`, `astral-sh/ruff-action@v3`, `actions/setup-python@v6`), required by the org's new SHA-pinning Actions policy. No version changes.
+
 ---
 
 ## [1.1.2] - 2026-11-09
