@@ -16,6 +16,10 @@ Types of changes:
 
 ## [Unreleased]
 
+### Removed
+
+- Unused docs plugins `mkdocs-gen-files`, `mkdocs-literate-nav` and `mkdocs-section-index` dropped from the `docs` dependency group. None is listed in `mkdocs.yaml`, and their latest releases pull in a new `properdocs` dependency
+
 ### Fixed
 
 - "Deploy Docs" runs on the push to `main` instead of on closed pull requests. The `github-pages` environment only allows `main` and `dev-gh-pages` to deploy, so every `pull_request` run (ref `refs/pull/<N>/merge`) was rejected before any step started. The workflow also copies the extension-less `LICENSE` to `docs/LICENSE.md`, the name the mkdocs nav expects
