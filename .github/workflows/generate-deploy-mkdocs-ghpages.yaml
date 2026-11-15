@@ -1,9 +1,11 @@
 ---
 name: Deploy Docs
 
+# Reason: the github-pages environment only lets main (and dev-gh-pages) deploy.
+# A pull_request run has ref refs/pull/<N>/merge, which the environment rejects
+# before any step starts, so deploy on the push to main that a merge creates.
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches: [main]
   workflow_dispatch:
 
@@ -26,22 +28,16 @@ jobs:
     steps:
 
     - name: Checkout the repository
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       with:
-        ref:
-          ${{
-            github.event.pull_request.merged == true &&
-            'main' ||
-            github.ref_name
-          }}
         fetch-depth: 0
 
-    - uses: actions/configure-pages@v6
+    - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d  # v6.0.0
 
     # caching instead of actions/cache@v4
     # https://docs.astral.sh/uv/guides/integration/github/#caching
     - name: Install uv with cache dependency glob
-      uses: astral-sh/setup-uv@v7
+      uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78  # v7.6.0
       with:
         enable-cache: true
         cache-dependency-glob: "uv.lock"
@@ -74,7 +70,9 @@ jobs:
         # TODO copy only files in nav of mkdocs.yaml
         mkdir -p "${DOC_DIR}"
         cp README.md "${DOC_DIR}/index.md"
-        cp {CHANGELOG,LICENSE}.md "${DOC_DIR}"
+        cp CHANGELOG.md "${DOC_DIR}"
+        # The repo's licence file has no extension; mkdocs nav expects LICENSE.md.
+        cp LICENSE "${DOC_DIR}/LICENSE.md"
 
     - name: Generate code docstrings concat file
       run: |
@@ -102,11 +100,11 @@ jobs:
 #      run: uv run mkdocs gh-deploy --force
 
     - name: Upload artifact
-      uses: actions/upload-pages-artifact@v5
+      uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9  # v5.0.0
       with:
         path: "${{ env.SITE_DIR }}"
 
     - name: Deploy to GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v5
+      uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346  # v5.0.1
 ...

@@ -104,7 +104,7 @@ wheels = [
 
 [[package]]
 name = "dirtree-readme-action"
-version = "1.1.1"
+version = "1.1.2"
 source = { editable = "." }
 
 [package.dev-dependencies]
