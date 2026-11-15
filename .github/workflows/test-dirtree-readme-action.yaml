@@ -1,19 +1,40 @@
 ---
 name: 'test-action'
-on: 
+on:
   # [push, pull_request]
   workflow_dispatch:
+
+permissions:
+  contents: read
+
 jobs:
   dirtree:
     runs-on: ubuntu-latest
-    name: 'Get and save dirtree to `README.md`'
+    name: 'Run the action on the dispatched ref'
     steps:
       - name: checkout repo
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
-          repository: qte77/dirtree-readme-action
-          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: false
+
+      # The output file lives outside the checkout: the action's own checkout
+      # cleans the workspace, and its `git add` of this path stages nothing,
+      # so the test run never commits or pushes.
+      - name: Create the test output file with insert markers
+        run: |
+          echo "TEST_OUT_FILE=$RUNNER_TEMP/dirtree-test.md" >> "$GITHUB_ENV"
+          printf '%s\n' '# dirtree test' \
+            '<!-- DIRTREE-README-ACTION-INSERT-HERE-START -->' \
+            'placeholder' \
+            '<!-- DIRTREE-README-ACTION-INSERT-HERE-END -->' > "$RUNNER_TEMP/dirtree-test.md"
 
       - name: Call action
         uses: ./
+        with:
+          OUT_FILE: ${{ env.TEST_OUT_FILE }}
+
+      - name: Check the tree was written
+        run: |
+          cat "$TEST_OUT_FILE"
+          grep -q 'action.yaml' "$TEST_OUT_FILE"
 ...
