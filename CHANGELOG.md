@@ -27,6 +27,7 @@ Types of changes:
 
 ### Fixed
 
+- Bump workflow passes `github.ref_name`, step outputs and workflow env values through `env:` and quotes them as shell variables instead of expanding `${{ }}` inside `run:`, closing the CodeFactor/zizmor `template-injection` findings
 - "Deploy Docs" runs on the push to `main` instead of on closed pull requests. The `github-pages` environment only allows `main` and `dev-gh-pages` to deploy, so every `pull_request` run (ref `refs/pull/<N>/merge`) was rejected before any step started. The workflow also copies the extension-less `LICENSE` to `docs/LICENSE.md`, the name the mkdocs nav expects
 - The manual `test-action` workflow checks out the ref it was dispatched on. It used to check out the repo's old name `qte77/dirtree-readme-action`, which resolves to this repo's default branch, so a run on a branch tested `main`. It now runs read-only, writes the tree to a file outside the checkout so it never commits or pushes, and fails if no tree was written
 - `uv.lock` synced to the 1.1.2 project version, so `uv run --locked` (used by the docs build) no longer fails
