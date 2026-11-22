@@ -16,6 +16,11 @@ Types of changes:
 
 ## [Unreleased]
 
+### Changed
+
+- Claude Code `.claude/settings.json` sets `BASH_MAX_OUTPUT_LENGTH` to `15000` and
+  `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` to `50` ([docs](https://code.claude.com/docs/en/env-vars))
+
 ### Removed
 
 - Unused docs plugins `mkdocs-gen-files`, `mkdocs-literate-nav` and `mkdocs-section-index` dropped from the `docs` dependency group. None is listed in `mkdocs.yaml`, and their latest releases pull in a new `properdocs` dependency
