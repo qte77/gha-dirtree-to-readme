@@ -67,7 +67,7 @@ jobs:
 
     - name: Copy text files to be included
       run: |
-        # TODO copy only files in nav of mkdocs.yaml
+        # Copies only the nav files that live outside docs/ (README, CHANGELOG, LICENSE).
         mkdir -p "${DOC_DIR}"
         cp README.md "${DOC_DIR}/index.md"
         cp CHANGELOG.md "${DOC_DIR}"
