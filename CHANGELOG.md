@@ -20,6 +20,11 @@ Types of changes:
 
 - Claude Code `.claude/settings.json` sets `BASH_MAX_OUTPUT_LENGTH` to `15000` and
   `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` to `50` ([docs](https://code.claude.com/docs/en/env-vars))
+- Release flow moved to the `qte77/.github` reusables, pinned to the v0.1.2 tag commit (`@aeef158f…  # v0.1.2`) (#95):
+  `bump-my-version.yaml` now only bumps (signed bump commit, `uv.lock` resynced, bump PR); the new `tag-release.yaml`
+  tags `vX.Y.Z`, publishes the Release and moves the floating major tag once the bump PR is merged to `main`; the new
+  `publish-release.yaml` re-publishes a given `vX.Y.Z` tag on dispatch. Tag and Release are no longer created on the
+  unmerged bump branch, and a failed bump no longer deletes tags.
 
 ### Removed
 
